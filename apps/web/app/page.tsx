@@ -130,7 +130,7 @@ export default function Home() {
           <DbcLaunchButton
             name="CurvePilot Demo"
             symbol="CPILOT"
-            uri={(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000") + "/metadata/demo.json"}
+            uri={(typeof window !== "undefined" ? window.location.origin : (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000")) + "/metadata/demo.json"}
             feeBps={fee}
             asset={asset}
             initialMarketCap={caps.initial}
