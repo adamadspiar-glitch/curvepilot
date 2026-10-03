@@ -31,6 +31,15 @@ export const CURVE_RECIPES: CurveRecipe[] = [
     graduationQuoteThreshold: 500_000
   },
   {
+    id: "stock-discovery",
+    name: "Stock Discovery",
+    assetType: "STOCK",
+    profile: "CONSERVATIVE",
+    description: "A measured discovery profile for tokenized-equity experiments.",
+    suggestedFeeBps: 75,
+    graduationQuoteThreshold: 350_000
+  },
+  {
     id: "community-bootstrap",
     name: "Community Bootstrap",
     assetType: "COMMUNITY",
@@ -38,6 +47,15 @@ export const CURVE_RECIPES: CurveRecipe[] = [
     description: "A configurable community-launch profile.",
     suggestedFeeBps: 100,
     graduationQuoteThreshold: 100_000
+  },
+  {
+    id: "custom-experimental",
+    name: "Custom Experimental",
+    assetType: "CUSTOM",
+    profile: "CUSTOM",
+    description: "A neutral starting recipe for fully custom launch experiments.",
+    suggestedFeeBps: 100,
+    graduationQuoteThreshold: 250_000
   }
 ];
 
