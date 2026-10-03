@@ -49,6 +49,6 @@ The browser generates the DBC config Keypair locally and supplies it as a transa
 
 If a config transaction fails, its unused public address can simply be discarded and a new config can be generated.
 
-## Current limitation
+## Graduation and DAMM v2
 
-Pool graduation detection is implemented through DBC curve-progress polling. Explicit DAMM v2 migration execution and post-migration DAMM v2 trading are not yet automated by the public MVP.
+Once the DBC curve reaches 100% progress, the UI exposes a **Migrate to DAMM v2** action. The SDK builds the migration transaction and returns the two position-NFT Keypairs required to sign it; the connected wallet signs the transaction. Post-migration DAMM v2 trading UI is still outside the public MVP.
