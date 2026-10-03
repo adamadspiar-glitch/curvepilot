@@ -1,0 +1,12 @@
+{
+  "name": "CurvePilot Demo",
+  "symbol": "CPILOT",
+  "description": "CurvePilot programmable liquidity launch demo token for the Crypto World's Fair hackathon.",
+  "image": "",
+  "external_url": "https://github.com/adamadspiar-glitch/curvepilot",
+  "attributes": [
+    { "trait_type": "Platform", "value": "CurvePilot" },
+    { "trait_type": "Protocol", "value": "Meteora Dynamic Bonding Curve" },
+    { "trait_type": "Network", "value": "Solana Devnet" }
+  ]
+}
