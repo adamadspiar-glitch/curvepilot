@@ -2,93 +2,106 @@
 
 **Programmable liquidity launch infrastructure for Solana, powered by Meteora Dynamic Bonding Curve.**
 
-CurvePilot turns an asset-launch intent into a configurable Meteora DBC launch plan.
+CurvePilot turns asset-launch intent into a reusable curve recipe, simulates it, creates a Meteora DBC partner config, launches a DBC pool, and reads live curve progress.
 
-## Core flow
+## Current MVP flow
 
-`Asset intent → Curve recipe → Simulation → Meteora DBC launch → Graduation → DAMM v2`
+Asset intent → Curve recipe → Simulation → DBC config → DBC pool → curve progress → DAMM v2 graduation
 
-## Why CurvePilot?
+The final graduation step is represented in the UI and documented, but the explicit migration transaction is **not yet automated** in this public MVP.
 
-Most token launchers treat the bonding curve as an implementation detail. CurvePilot makes the curve itself a product primitive.
+## Implemented
 
-Builders can:
-- choose an asset profile (AI, RWA, tokenized stock, community, custom)
-- generate a reusable curve recipe
-- simulate the configuration before launch
-- launch through Meteora DBC
-- monitor progress toward graduation
-- transition to post-graduation liquidity
+- Solana wallet connection with Phantom / Solflare
+- Devnet-first RPC configuration
+- Asset profiles: AI, RWA, tokenized stock, community, custom
+- Reusable Curve Recipe definitions
+- Plain-language intent → recipe mapping
+- Visual curve simulator
+- Meteora DBC SDK buildCurveWithMarketCap
+- In-app partner DBC config creation
+- Wallet-signed config keypair creation
+- Meteora DBC creator pool creation
+- Demo token metadata endpoint
+- Live DBC quote-curve progress polling
+- Solana Explorer transaction links
+- Local persistence of the public DBC config address
+- DAMM v2 migration target in every new DBC config
 
-## Current status
+Meteora's current SDK separates curve construction from config creation, and new configs use DAMM v2 rather than the deprecated DAMM v1 migration option.
 
-This repository is the **public MVP scaffold** for the hackathon submission.
+## Important MVP boundaries
 
-Do not claim a feature as live until its corresponding on-chain integration has been tested and deployed.
+- The current UI uses market-cap curve recipes for on-chain configuration. The visual "curve length" slider is a simulator control, not a direct on-chain parameter.
+- The app does not store private keys or seed phrases.
+- The browser wallet signs both config and pool transactions.
+- Use Solana Devnet while testing.
+- Do not claim mainnet deployment, trading volume, users, or completed DAMM v2 migration until those have actually been executed and verified.
+- The explicit DAMM v2 migration transaction is the next integration step after the pool reaches its configured threshold.
 
-## Tech stack
+## Local development
 
-- Next.js / React
-- TypeScript
-- Solana wallet tooling
-- `@meteora-ag/dynamic-bonding-curve-sdk`
-- Meteora DBC
-- Meteora DAMM v2 (post-graduation integration)
-- AI configuration layer
+Requirements:
+
+- Node.js 18+
+- pnpm
+- Phantom or Solflare
+- Devnet SOL for transaction fees
+
+~~~
+pnpm install
+pnpm dev
+~~~
+
+Copy .env.example to .env.local.
+
+The app defaults to:
+
+- Network: Solana Devnet
+- Quote mint: wrapped SOL
+- Metadata: /metadata/demo.json
+
+## Meteora architecture
+
+CurvePilot follows Meteora's current DBC lifecycle:
+
+1. Partner creates a reusable config.
+2. Creator creates a pool against that config.
+3. Traders interact with the bonding curve.
+4. Quote reserve reaches the configured migration threshold.
+5. The pool graduates to DAMM v2 according to the config.
+
+Meteora documents client.partner.createConfig for reusable configs and client.creator.createPool for creator launches.
 
 ## Repository structure
 
-```text
+~~~text
 curvepilot/
 ├── apps/
 │   └── web/
+│       ├── app/
+│       ├── components/
+│       └── public/metadata/
 ├── packages/
 │   └── curve-engine/
 ├── docs/
 │   ├── architecture.md
 │   ├── demo-script.md
-│   └── hackathon-submission.md
+│   ├── hackathon-submission.md
+│   └── dbc-config.md
 ├── .env.example
 ├── package.json
 └── README.md
-```
+~~~
 
-## Local development
+## Security
 
-Requirements:
-- Node.js 18+
-- pnpm
-- Solana wallet
+Never expose a wallet private key or seed phrase in the frontend, GitHub, environment variables committed to the repository, or chat.
 
-```bash
-pnpm install
-pnpm dev
-```
-
-Copy `.env.example` to `.env.local` and fill only the variables required by the features you have actually implemented.
-
-## Meteora integration
-
-Meteora's official Dynamic Bonding Curve SDK is used for DBC integration.
-
-```bash
-pnpm add @meteora-ag/dynamic-bonding-curve-sdk
-```
-
-Official references:
-- https://docs.meteora.ag/developer-guides/dbc
-- https://github.com/MeteoraAg/dynamic-bonding-curve-sdk
-
-## Safety / launch policy
-
-Never expose a wallet private key or seed phrase in the frontend or repository.
-
-Use devnet for integration testing first. Mainnet transactions should require explicit wallet approval.
+The config keypair generated by the browser is only a transaction signer; its public key is stored locally so the same browser session can reuse the config. A lost/failed config transaction does not expose the user's wallet.
 
 ## Hackathon
 
-Track: Meteora — Crypto World's Fair
-
-Prize pool listed by the sponsor: $20,000 USDC.
+Track: Meteora — Crypto World's Fair.
 
 The final submission should include only links and capabilities that are publicly accessible and actually implemented.
