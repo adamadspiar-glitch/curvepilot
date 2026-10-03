@@ -8,7 +8,7 @@ CurvePilot turns asset-launch intent into a reusable curve recipe, simulates it,
 
 Asset intent → Curve recipe → Simulation → DBC config → DBC pool → curve progress → DAMM v2 graduation
 
-The final graduation step is represented in the UI and documented, but the explicit migration transaction is **not yet automated** in this public MVP.
+The UI also exposes the explicit DAMM v2 migration action once the DBC curve reaches its threshold. Post-migration DAMM v2 trading is not included yet.
 
 ## Implemented
 
@@ -27,6 +27,7 @@ The final graduation step is represented in the UI and documented, but the expli
 - Solana Explorer transaction links
 - Local persistence of the public DBC config address
 - DAMM v2 migration target in every new DBC config
+- DAMM v2 migration transaction action with the SDK-provided position NFT signers
 
 Meteora's current SDK separates curve construction from config creation, and new configs use DAMM v2 rather than the deprecated DAMM v1 migration option.
 
@@ -36,8 +37,8 @@ Meteora's current SDK separates curve construction from config creation, and new
 - The app does not store private keys or seed phrases.
 - The browser wallet signs both config and pool transactions.
 - Use Solana Devnet while testing.
-- Do not claim mainnet deployment, trading volume, users, or completed DAMM v2 migration until those have actually been executed and verified.
-- The explicit DAMM v2 migration transaction is the next integration step after the pool reaches its configured threshold.
+- Do not claim mainnet deployment, trading volume, users, or completed migration until the corresponding transactions have actually been executed and verified.
+- Post-migration DAMM v2 trading UI is not included yet.
 
 ## Local development
 
