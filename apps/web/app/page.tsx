@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { CURVE_RECIPES, AssetType, CurveProfile } from "@curvepilot/curve-engine";
+import DbcLaunchButton from "../components/DbcLaunchButton";
 
 const assets: AssetType[] = ["AI", "RWA", "STOCK", "COMMUNITY", "CUSTOM"];
 
@@ -48,8 +49,7 @@ export default function Home() {
         <label style={{display:"block",marginBottom:18}}>Curve length: <strong>{length}</strong><input type="range" min="20" max="200" value={length} onChange={(e)=>setLength(Number(e.target.value))} style={{display:"block",width:"100%"}} /></label>
         <label style={{display:"block",marginBottom:18}}>Fee: <strong>{fee} bps</strong><input type="range" min="10" max="300" step="5" value={fee} onChange={(e)=>setFee(Number(e.target.value))} style={{display:"block",width:"100%"}} /></label>
         <label style={{display:"block",marginBottom:18}}>Graduation quote threshold: <strong>{graduation.toLocaleString()}</strong><input type="range" min="50000" max="1000000" step="10000" value={graduation} onChange={(e)=>setGraduation(Number(e.target.value))} style={{display:"block",width:"100%"}} /></label>
-        <button style={{padding:"13px 16px",borderRadius:11,border:0,background:"#111",color:"#fff",cursor:"pointer"}} onClick={()=>alert("Next: connect wallet and create the Meteora DBC pool.")}>Preview launch</button>
-        <div style={{marginTop:8,fontSize:12,opacity:.55}}>Wallet + on-chain DBC launch is the next integration step.</div>
+        <DbcLaunchButton name="CurvePilot Demo" symbol="CPILOT" uri={process.env.NEXT_PUBLIC_APP_URL || "https://curvepilot.app/metadata/demo.json"} />
       </div>
       <div style={{border:"1px solid #ddd",borderRadius:18,padding:24}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}><div><h2 style={{margin:"0 0 4px"}}>Curve Simulator</h2><div style={{opacity:.6}}>Profile: {profile}</div></div><div style={{fontFamily:"monospace",fontSize:12,opacity:.6}}>LIVE PREVIEW</div></div>
