@@ -212,7 +212,7 @@ export default function DbcLaunchButton({
         dammConfig: DAMM_V2_MIGRATION_FEE_ADDRESS[3],
         payer: wallet.publicKey,
       });
-      const txid = await wallet.sendTransaction(connection ? result.transaction : result.transaction, connection, {
+      const txid = await wallet.sendTransaction(result.transaction, connection, {
         signers: [result.firstPositionNftKeypair, result.secondPositionNftKeypair],
       });
       await connection.confirmTransaction(txid, "confirmed");
