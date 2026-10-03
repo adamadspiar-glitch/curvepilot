@@ -47,12 +47,18 @@ export default function DbcLaunchButton({
   const [migrated, setMigrated] = useState(false);
   const [status, setStatus] = useState("");
 
+  const configStorageKey = wallet.publicKey ? `curvepilot.dbcConfig.${wallet.publicKey.toBase58()}` : "";
+
   const fee = useMemo(() => Math.max(25, feeBps), [feeBps]);
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("curvepilot.dbcConfig");
-    if (saved) setConfigAddress(saved);
-  }, []);
+    if (!configStorageKey) {
+      setConfigAddress("");
+      return;
+    }
+    const saved = window.localStorage.getItem(configStorageKey);
+    setConfigAddress(saved ?? "");
+  }, [configStorageKey]);
 
   useEffect(() => {
     if (!baseMintAddress) return;
@@ -154,7 +160,7 @@ export default function DbcLaunchButton({
       const txid = await wallet.sendTransaction(tx, connection, { signers: [configKeypair] });
       await connection.confirmTransaction(txid, "confirmed");
       setConfigAddress(configKeypair.publicKey.toBase58());
-      window.localStorage.setItem("curvepilot.dbcConfig", configKeypair.publicKey.toBase58());
+      if (configStorageKey) window.localStorage.setItem(configStorageKey, configKeypair.publicKey.toBase58());
       setSignature(txid);
       setStatus("DBC config created. You can now launch a pool with this reusable recipe.");
     } catch (error) {
