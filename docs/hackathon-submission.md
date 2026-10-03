@@ -11,7 +11,7 @@
 - [x] In-app DBC pool creation transaction
 - [x] Live DBC curve-progress polling
 - [x] Demo token metadata
-- [ ] Explicit DAMM v2 migration transaction
+- [x] Explicit DAMM v2 migration transaction builder/action
 - [ ] Post-graduation DAMM v2 trading UI
 - [ ] Mainnet launch
 
